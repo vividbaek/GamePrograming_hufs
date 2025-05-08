@@ -1,0 +1,47 @@
+# ==== Unity generated folders ====
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+UserSettings/
+MemoryCaptures/
+
+# crash report
+sysinfo.txt
+
+# any log anywhere
+*.log
+
+# exported objects
+.exportedobj/
+
+# Asset Store tools
+Assets/AssetStoreTools*
+
+# local package-manager cache
+Packages/com.unity.package-manager/
+
+# ==== Visual Studio / Rider / IDE ====
+.vs/
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.opendb
+*.VC.db
+
+# ==== Solution & Project Files (auto-gen) ====
+*.csproj
+*.unityproj
+*.sln
+
+# ==== Misc binaries/debug ====
+*.pdb
+*.mdb
+
+# ==== OS files ====
+.DS_Store
+Thumbs.db
