@@ -567,9 +567,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed6b92a06dd03d429930fac061f1dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canControl: 0
   moveSpeed: 3
   jumpForce: 2
-  isGrounded: 0
 --- !u!1 &420587767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,9 +1139,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed6b92a06dd03d429930fac061f1dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canControl: 0
   moveSpeed: 5
   jumpForce: 5
-  isGrounded: 0
 --- !u!95 &1617326029
 Animator:
   serializedVersion: 5
