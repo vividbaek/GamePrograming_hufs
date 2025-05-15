@@ -7,8 +7,8 @@ public class CharacterController2D : MonoBehaviour
     public bool canControl = false;
 
     [Header("이동 세팅")]
-    public float moveSpeed = 3f;
-    public float jumpForce = 2f;
+    public float moveSpeed = 15f;
+    public float jumpForce = 7f;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -20,10 +20,10 @@ public class CharacterController2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();        // Animator가 없으면 null
         originalScale = transform.localScale;
-        isGrounded = true;
+        isGrounded = false;
 
         // 시작 시 중력 비활성화 → 땅에 닿으면 활성화
-        rb.gravityScale = 0f;
+        rb.gravityScale = 2f;
     }
 
     void Update()
@@ -45,29 +45,20 @@ public class CharacterController2D : MonoBehaviour
             transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
         }
 
-        // 3) 애니메이션 파라미터 설정 (Animator가 있을 때만)
-        if (anim != null)
-        {
-            anim.SetFloat("Speed", Mathf.Abs(moveInput));
-            anim.SetBool("IsJumping", !isGrounded);
-        }
-
         // 4) 점프 처리
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
         }
     }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Ground 태그만 검사
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            rb.gravityScale = 2f;  // 땅에 닿으면 중력 활성화
-            Debug.Log("Collided with: " + collision.gameObject.name);
+            // 땅에 닿을 때만 중력을 켜 줌
+            rb.gravityScale = 2f;
         }
     }
 
