@@ -7,8 +7,8 @@ public class CharacterSwitcher : MonoBehaviour
 
     void Start()
     {
-        lowerCtrl.canControl = true;
-        upperCtrl.canControl = false;
+        lowerCtrl.canControl = false;
+        upperCtrl.canControl = true;
     }
 
     // 버튼 OnClick 함수로 연결
