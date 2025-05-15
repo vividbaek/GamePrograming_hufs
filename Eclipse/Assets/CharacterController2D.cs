@@ -18,11 +18,9 @@ public class CharacterController2D : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();        // Animator가 없으면 null
+        anim = GetComponent<Animator>();
         originalScale = transform.localScale;
         isGrounded = false;
-
-        // 시작 시 중력 비활성화 → 땅에 닿으면 활성화
         rb.gravityScale = 2f;
     }
 
