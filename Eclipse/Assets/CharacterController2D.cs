@@ -10,6 +10,10 @@ public class CharacterController2D : MonoBehaviour
     public float moveSpeed = 15f;
     public float jumpForce = 7f;
 
+    [Header("이동 경계 (왼쪽)")]
+    [Tooltip("이 값보다 왼쪽으로는 이동하지 않습니다.")]
+    public float minX = -8f;
+
     private Rigidbody2D rb;
     private Animator anim;
     private bool isGrounded;
@@ -20,57 +24,67 @@ public class CharacterController2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         originalScale = transform.localScale;
+
+        // 땅에 닿기 전까지 이중 점프 방지
         isGrounded = false;
+
+        // 기본 중력값 세팅 (원하는 값으로 조정 가능)
         rb.gravityScale = 2f;
     }
 
     void Update()
     {
-        // 컨트롤 플래그가 꺼져 있으면 아무 동작도 하지 않음
         if (!canControl) return;
 
-        // 1) 수평 이동
-        float moveInput = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        // ─── 1) 수평 이동 ───────────────────────────
+        float h = Input.GetAxisRaw("Horizontal");
+        rb.velocity = new Vector2(h * moveSpeed, rb.velocity.y);
 
-        // 2) 좌우 방향으로 스케일 뒤집기
-        if (moveInput > 0)
-        {
+        // ─── 2) 왼쪽 경계(minX) 이하로 못 가게 고정 ───
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Max(pos.x, minX);
+        transform.position = pos;
+
+        // ─── 3) 좌우 스케일 뒤집기 ──────────────────
+        if (h > 0)
             transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
-        }
-        else if (moveInput < 0)
-        {
+        else if (h < 0)
             transform.localScale = new Vector3(-Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
-        }
 
-        // 4) 점프 처리
+        // ─── 4) 점프 처리 ───────────────────────────
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
         }
-    }
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
+
+        // ─── 5) 애니메이션 파라미터 업데이트 ───────── (Animator가 있을 때만)
+        if (anim != null)
         {
-            isGrounded = true;
-            // 땅에 닿을 때만 중력을 켜 줌
-            rb.gravityScale = 2f;
+            anim.SetFloat("Speed", Mathf.Abs(h));
+            anim.SetBool("IsJumping", !isGrounded);
         }
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (col.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D col)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (col.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
         }

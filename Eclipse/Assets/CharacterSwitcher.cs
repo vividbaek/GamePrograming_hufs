@@ -9,8 +9,8 @@ public class CharacterSwitcher : MonoBehaviour
     void Start()
     {
         // 시작 시 아래 캐릭터 조작 + 카메라 타겟도 아래 캐릭터
-        lowerCtrl.canControl = true;
-        upperCtrl.canControl = false;
+        lowerCtrl.canControl = false;
+        upperCtrl.canControl = true;
         camFollow.target = lowerCtrl.transform;
     }
 
