@@ -7,15 +7,15 @@ public class ArrowSpawner : MonoBehaviour
     public GameObject arrowPrefab;
 
     [Header("스폰 X 범위")]
-    public float spawnXMin = -8f;
-    public float spawnXMax = 8f;
+    public float spawnXMin = 0.9f;
+    public float spawnXMax = 9.00f;
 
     [Header("스폰 Y 위치")]
     public float spawnY = 6f;
 
     [Header("스폰 간격 (초), 랜덤 범위")]
-    public float intervalMin = 0.5f;
-    public float intervalMax = 1.5f;
+    public float intervalMin = 2.0f;
+    public float intervalMax = 4.0f;
 
     [Header("위 캐릭터 컨트롤러 (조작할 때만 스폰)")]
     public CharacterController2D upperCtrl;

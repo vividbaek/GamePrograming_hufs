@@ -3,13 +3,13 @@ using UnityEngine;
 public class FlagDoorInteraction : MonoBehaviour
 {
     public GameObject doorTilemap; // ¹® Tilemap
-    private bool isFlagActivated = false;
+    //private bool isFlagActivated = false;
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && gameObject.CompareTag("Flag"))
         {
-            isFlagActivated = true;
+            //isFlagActivated = true;
             Debug.Log("Flag activated!");
             OpenDoor();
         }
@@ -19,7 +19,7 @@ public class FlagDoorInteraction : MonoBehaviour
     {
         if (other.CompareTag("Player") && gameObject.CompareTag("Flag"))
         {
-            isFlagActivated = false;
+            //isFlagActivated = false;
             Debug.Log("Flag deactivated!");
             CloseDoor();
         }

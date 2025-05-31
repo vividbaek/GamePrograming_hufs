@@ -57,13 +57,6 @@ public class CharacterController2D : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
         }
-
-        // ─── 5) 애니메이션 파라미터 업데이트 ───────── (Animator가 있을 때만)
-        if (anim != null)
-        {
-            anim.SetFloat("Speed", Mathf.Abs(h));
-            anim.SetBool("IsJumping", !isGrounded);
-        }
     }
 
     void OnCollisionEnter2D(Collision2D col)
